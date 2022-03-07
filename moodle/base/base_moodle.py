@@ -21,6 +21,8 @@ class BaseMoodle(object):
 
     @staticmethod
     def _tr(kls: Type[T], *args, **kwargs) -> T:
+        # print(kwargs)
+        # print(kls)
         return cattr.structure(kwargs, kls)  # type: ignore
 
     @staticmethod

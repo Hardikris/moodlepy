@@ -1,5 +1,12 @@
 # moodlepy
 
+## Some change and addition
+
+Because of urgent requirement i make some quick adjustment :
+- return function as dictionary
+- add grading_report
+will return asap so i can directly use this moodlepy
+
 [![PyPi Package Version](https://img.shields.io/pypi/v/moodlepy)](https://pypi.org/project/moodlepy/)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/moodlepy)](https://pypi.org/project/moodlepy/)
 [![LICENSE](https://img.shields.io/github/license/hexatester/moodlepy)](https://github.com/hexatester/moodlepy/blob/master/LICENSE)

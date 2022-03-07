@@ -86,6 +86,33 @@ class BaseEnrol(BaseMoodle):
         )
         return self._trs(EnrolledUser, data)
 
+    def get_enrolled_users_plain(
+        self, courseid: int, options: Optional[List[GeneralNameValue]]
+    ):
+        """Get enrolled users by course id.
+
+        Args:
+            courseid (int): course id
+            options (Optional[List[GeneralNameValue]]): Option names:
+                                                            * withcapability (string) return only users with this capability. This option requires 'moodle/role:review' on the course context.
+                                                            * groupid (integer) return only users in this group id. If the course has groups enabled and this param isn't defined, returns all the viewable users. This option requires 'moodle/site:accessallgroups' on the course context if the user doesn't belong to the group.
+                                                            * onlyactive (integer) return only users with active enrolments and matching time restrictions. This option requires 'moodle/course:enrolreview' on the course context.
+                                                            * userfields ('string, string, ...') return only the values of these user fields.
+                                                            * limitfrom (integer) sql limit from.
+                                                            * limitnumber (integer) maximum number of returned users.
+                                                            * sortby (string) sort by id, firstname or lastname. For ordering like the site does, use siteorder.
+                                                            * sortdirection (string) ASC or DESC
+
+        Returns:
+            List[EnrolledUser]: list of EnrolledUser
+        """
+        data = self.moodle.post(
+            "core_enrol_get_enrolled_users",
+            courseid=courseid,
+            options=options,
+        )
+        return data
+
     def get_enrolled_users_with_capability(
         self,
         coursecapabilities: List[CourseCapability],

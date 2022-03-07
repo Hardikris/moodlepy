@@ -149,8 +149,12 @@ class BaseUser(BaseMoodle):
         )
         return self._tr(GetUsersResponse, **data)
 
-    def get_users_by_field(self):
-        data = self.moodle.post("core_user_get_users_by_field")
+    def get_users_by_field(self, field: str, values: List[str]):
+        data = self.moodle.post(
+            "core_user_get_users_by_field",
+            field=field,
+            values=values
+        )
         return data
 
     def remove_user_device(self):

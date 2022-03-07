@@ -311,6 +311,42 @@ class BaseCourse(BaseMoodle):
         )
         return self._tr(SearchResult, **res)
 
+    def search_courses_plain(
+        self,
+        criterianame: str,
+        criteriavalue: str,
+        page: int = 0,
+        perpage: int = 0,
+        requiredcapabilities: Optional[List[str]] = None,
+        limittoenrolled: int = 0,
+        onlywithcompletion: int = 0,
+    ):
+        """Search courses by (name, module, block, tag)
+
+        Args:
+            criterianame (str): criteria name (search, modulelist (only admins), blocklist (only admins), tagid)
+            criteriavalue (str): criteria value
+            page (int, optional): page number (0 based). Defaults to 0.
+            perpage (int, optional): items per page. Defaults to 0.
+            requiredcapabilities (Optional[List[str]], optional): Optional list of required capabilities (used to filter the list). Defaults to None.
+            limittoenrolled (int, optional): limit to enrolled courses. Defaults to 0.
+            onlywithcompletion (int, optional): limit to courses where completion is enabled. Defaults to 0.
+
+        Returns:
+            SearchResult: List of result courses
+        """
+        res = self.moodle.post(
+            "core_course_search_courses",
+            criterianame=criterianame,
+            criteriavalue=criteriavalue,
+            page=page,
+            perpage=perpage,
+            requiredcapabilities=requiredcapabilities,
+            limittoenrolled=limittoenrolled,
+            onlywithcompletion=onlywithcompletion,
+        )
+        return res
+
     def set_favourite_courses(self):
         res = self.moodle.post("core_course_set_favourite_courses")
         return res

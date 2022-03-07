@@ -38,6 +38,30 @@ class BaseAssign(BaseMoodle):
         )
         return self._tr(Assignments, **res)
 
+    def get_assignments_plain(
+        self,
+        courseids: Optional[List[int]] = None,
+        capabilities: Optional[List[str]] = None,
+        includenotenrolledcourses: Optional[int] = None,
+    ) -> Assignments:
+        """Returns the courses and assignments for the users capability
+
+        Args:
+            courseids (Optional[List[int]], optional): 0 or more course ids. Defaults to None.
+            capabilities (Optional[List[str]], optional): list of capabilities used to filter courses. Defaults to None.
+            includenotenrolledcourses (Optional[int], optional): whether to return courses that the user can see even if is not enroled in. This requires the parameter courseids to not be empty. Defaults to None.
+
+        Returns:
+            Assignments: Returns the courses and assignments for the users capability
+        """
+        res = self.moodle.post(
+            "mod_assign_get_assignments",
+            courseids=courseids,
+            capabilities=capabilities,
+            includenotenrolledcourses=includenotenrolledcourses,
+        )
+        return res
+
     def get_grades(
         self, assignmentids: List[int], since: Union[datetime, int] = 0
     ) -> Grades:
@@ -56,6 +80,25 @@ class BaseAssign(BaseMoodle):
             since=since,
         )
         return self._tr(Grades, **res)
+
+    def get_grades_plain(
+        self, assignmentids: List[int], since: Union[datetime, int] = 0
+    ) -> Grades:
+        """Returns grades from the assignment
+
+        Args:
+            assignmentids (List[int]): 1 or more assignment ids
+            since (Union[datetime, int], optional):  timestamp, only return records where timemodified >= since. Defaults to 0.
+
+        Returns:
+            Grades: Returns grades from the assignment
+        """
+        res = self.moodle.post(
+            "mod_assign_get_grades",
+            assignmentids=assignmentids,
+            since=since,
+        )
+        return res
 
     def list_participants(
         self,
